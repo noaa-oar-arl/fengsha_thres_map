@@ -93,20 +93,20 @@ def patch_thres(stype,uth,thresholds,loc_con):
     from numpy import zeros, shape, arange,where
     u = uth.data.copy()
     for i in arange(1,14):
-#        print(i,thresholds[int(i)-1])
+        print(i,thresholds[int(i)-1])
         u[where((loc_con) & (stype == i))] = thresholds[int(i)-1]
     return u
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description='download and gridding MODIS data',
+        description='Modify thresholds in a certain area',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-d', '--data_directory',
                         default=None,
                         required=True,
                         help='path to the emission data (for single month: i.e. emi_C384/01)')
     parser.add_argument('-ut', '--threshold_velocity',
-                        default="0.065,0.18,0.28,0.30,0.35,0.45,0.45,0.42,0.42,0.45,0.50,0.45,9999.0",
+                        default=None,
                         required=True,
                         help='Threshold friction Velocity for soil types.  Enter as string: "0.065,0.18,0.28,0.30,0.35,0.45,0.45,0.42,0.42,0.45,0.50,0.45,9999.0"')
     parser.add_argument('-b', '--latlon_box',
@@ -127,7 +127,19 @@ if __name__ == "__main__":
     res = args.resolution
     output_fname = args.output_filename
     lonmin,latmin,lonmax,latmax = array(args.latlon_box.split(','),dtype=float)
+    
 
+    print('----------------------------------------------------')
+    print(' Beginning program' )
+    print(' Thresholds:')
+    for i in range(13):
+        print("   Soil Type {}: {}".format(i+1,thres[i]))
+    print('')
+    print(' Lat min: {}'.format(latmin))
+    print(' Lat max: {}'.format(latmax))
+    print(' Lon min: {}'.format(lonmin))
+    print(' Lon max: {}'.format(lonmax))
+    print('----------------------------------------------------')
     for i in arange(1,7):
         tile = 'tile{}'.format(int(i))
         #form full path of files

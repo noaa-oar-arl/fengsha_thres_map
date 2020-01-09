@@ -96,7 +96,7 @@ def create_thres(stype,thres):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description='download and gridding MODIS data',
+        description='generate fv3 chem threshold friction velocities',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-d', '--data_directory',
                         default=None,
