@@ -91,7 +91,7 @@ def calc_soil_type(clay,sand,silt):
 
 def patch_thres(stype,uth,thresholds,loc_con):
     from numpy import zeros, shape, arange,where
-    u = uth.data.copy()
+    u = uth.data # .copy()
     for i in arange(1,14):
         print(i,thresholds[int(i)-1])
         u[where((loc_con) & (stype == i))] = thresholds[int(i)-1]
