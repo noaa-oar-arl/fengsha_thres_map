@@ -69,7 +69,7 @@ def to_prepchem_binary(data, fname='output.bin', dtype='f4'):
     f = FortranFile(fname, 'w')
     f.write_record(data.astype(dtype))
     f.close()
-    
+
 def calc_soil_type(clay,sand,silt):
     from numpy import zeros,where
     stype = zeros(clay.shape)
@@ -127,7 +127,6 @@ if __name__ == "__main__":
     res = args.resolution
     output_fname = args.output_filename
     lonmin,latmin,lonmax,latmax = array(args.latlon_box.split(','),dtype=float)
-    
 
     print('----------------------------------------------------')
     print(' Beginning program' )
@@ -175,6 +174,3 @@ if __name__ == "__main__":
         th = patch_thres(stype,uth,thres,loc_con)
         print('     Output: {}'.format(output))
         to_prepchem_binary(th.T,fname=output)
-            
-        
-        

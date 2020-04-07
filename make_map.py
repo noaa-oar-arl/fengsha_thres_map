@@ -9,7 +9,7 @@ try:
     has_fv3grid = True
 except ImportError:
     has_fv3grid = False
-    
+
 def wrap_longitudes(lons):
     return (lons + 180) % 360 - 180
 
@@ -48,7 +48,7 @@ def open_fv3_binary(fname, dtype='f4', res='C384', tile=1):
         )
         print('to gain the full capability of this dataset')
         return xr.DataArray(s, dims=('x', 'y'))
-
+    
 def to_prepchem_binary(data, fname='output.bin', dtype='f4'):
     """Writes to binary file for prep_chem_sources.
     Parameters
@@ -67,7 +67,7 @@ def to_prepchem_binary(data, fname='output.bin', dtype='f4'):
     f = FortranFile(fname, 'w')
     f.write_record(data.astype(dtype))
     f.close()
-    
+
 def calc_soil_type(clay,sand,silt):
     from numpy import zeros,where
     stype = zeros(clay.shape)
@@ -142,6 +142,3 @@ if __name__ == "__main__":
         thres = create_thres(stype,ut)
         print('     Output: {}'.format(output))
         to_prepchem_binary(thres.T,fname=output)
-        
-        
-        
