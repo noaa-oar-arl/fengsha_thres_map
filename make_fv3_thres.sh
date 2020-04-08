@@ -25,21 +25,21 @@ for month in 03; do
     
     # MODIFY TAKLAMAKAN
     echo " MODIFYING TALKAMAKAN -------------------------------------------"
-    thres="0.065,0.18,0.15,0.30,0.35,0.38,0.45,0.41,0.41,0.45,0.50,0.45,9999.0"
+    thres="0.065,0.18.5,0.18,0.30,0.35,0.38,0.45,0.41,0.41,0.45,0.50,0.45,9999.0"
     box="77.6,36,89,41.1"
     
     ./modify_latlon_box.py -ut ${thres} -d ${directory} -b $box -r $res
     
     # MODIFY CENTRAL US
 #    echo " MODIFYING CENTRAL US -------------------------------------------"
-    thres="0.065,0.18,0.23,0.50,0.45,0.38,0.40,0.50,0.50,0.25,0.50,0.45,9999.0"
+    thres="0.065,0.18,0.20,0.50,0.45,0.38,0.40,0.50,0.50,0.25,0.50,0.45,9999.0"
     box="-126,25,-65,50"
     #box="77.6,36,89,41.1"
     ./modify_latlon_box.py -ut $thres -d $directory -r $res --latlon_box=$box
     
     # Modify Nothern Mexico for continuity
     echo " MODIFYING MX for Continuity -------------------------------------------"
-    thres="0.065,0.18,0.23,0.50,0.45,0.38,0.45,0.50,0.41,0.23,0.50,0.45,9999.0" 
+    thres="0.065,0.18,0.20,0.50,0.45,0.38,0.45,0.50,0.41,0.23,0.50,0.45,9999.0" 
     box="-117.95,18,-94.6,36"
     
     ./modify_latlon_box.py -ut $thres -d $directory -r $res --latlon_box=$box
