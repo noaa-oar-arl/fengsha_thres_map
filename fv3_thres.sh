@@ -7,13 +7,13 @@ res='C384'
 #res='C96'
 #base_dir=emi_C96
 base_dir=bsmfv3
+directory=${base_dir}/${month}
 #----------------------------------------------------
 #for month in 01 02 03 04 05 06 07 08 09 10 11 12; do
 #for month in 03; do
 
     echo "SETTING DEFAULT THRESHOLDS"
     thres="0.11,0.25,0.28,0.31,0.35,0.40,0.45,0.41,0.50,0.45,0.50,0.45,9999.0"
-    directory=${base_dir}/${month}
     ./make_map.py -ut $thres -d $directory -r $res
     
     # # Modify Bodele 
@@ -65,4 +65,9 @@ base_dir=bsmfv3
 
     ./modify_latlon_box.py -ut $thres -d $directory -r $res --latlon_box=$box
 
+
+    # PATCH BEDROCK
+    echo " NO emissin over bedrock -------------------------------------------"
+
+    ./mask_bedrock.py -d $directory
 #done
