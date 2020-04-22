@@ -68,23 +68,43 @@ def to_prepchem_binary(data, fname='output.bin', dtype='f4'):
     f.write_record(data.astype(dtype))
     f.close()
 
+# def calc_soil_type(clay,sand,silt,bad_val=100.*100.):
+#     from numpy import zeros,where
+#     stype = zeros(clay.shape)
+#     stype[where((silt + clay*1.5 < 15.) & (clay != bad_val))] = 1.  #SAND
+#     stype[where((silt + 1.5*clay >= 15.) & (silt + 1.5*clay <30) & (clay != bad_val))] = 2. #Loamy Sand
+#     stype[where((clay >= 7.) & (clay < 20) & (sand >52) & (silt + 2* clay >=30) & (clay != bad_val))] = 3. #Sandy Loam (cond 1)
+#     stype[where((clay <   7) & (silt < 50) & (silt+2*clay >= 30) & (clay != bad_val))]   = 3      # sandy loam (cond 2)
+#     stype[where((silt >= 50) & (clay >= 12) & (clay < 27 ) & (clay != bad_val))] = 4      # silt loam (cond 1)
+#     stype[where((silt >= 50) & (silt < 80) & (clay < 12) & (clay != bad_val))] = 4      # silt loam (cond 2)
+#     stype[where((silt >= 80) & (clay < 12) & (clay != bad_val))]     = 5      # silt
+#     stype[where((clay >= 7 ) & (clay < 27) &(silt >= 28) & (silt < 50) & (sand <= 52) & (clay != bad_val))] = 6      # loam
+#     stype[where((clay >= 20) & (clay < 35) & (silt < 28) & (sand > 45) & (clay != bad_val))] = 7      # sandy clay loam
+#     stype[where((clay >= 27) & (clay < 40.) & (sand < 20) & (clay != bad_val))] =  8      # silt clay loam
+#     stype[where((clay >= 27) & (clay < 40.) & (sand >= 20) & (sand <= 45) & (clay != bad_val))] = 9      # clay loam
+#     stype[where((clay >= 35) & (sand > 45) & (clay != bad_val))] = 10     # sandy clay
+#     stype[where((clay >= 40) & (silt >= 40) & (clay != bad_val))] = 11     # silty clay
+#     stype[where((clay >= 40) & (sand <= 45) & (silt < 40) & (clay != bad_val))] = 12     # clay
+#     return stype
+
 def calc_soil_type(clay,sand,silt):
     from numpy import zeros,where
     stype = zeros(clay.shape)
-    stype[where((silt + clay*1.5 < 15.) & (clay != 255))] = 1.  #SAND
-    stype[where((silt + 1.5*clay >= 15.) & (silt + 1.5*clay <30) & (clay != 255))] = 2. #Loamy Sand
-    stype[where((clay >= 7.) & (clay < 20) & (sand >52) & (silt + 2* clay >=30) & (clay != 255))] = 3. #Sandy Loam (cond 1)
-    stype[where((clay <   7) & (silt < 50) & (silt+2*clay >= 30) & (clay != 255))]   = 3      # sandy loam (cond 2)
-    stype[where((silt >= 50) & (clay >= 12) & (clay < 27 ) & (clay != 255))] = 4      # silt loam (cond 1)
-    stype[where((silt >= 50) & (silt < 80) & (clay < 12) & (clay != 255))] = 4      # silt loam (cond 2)
-    stype[where((silt >= 80) & (clay < 12) & (clay != 255))]     = 5      # silt
-    stype[where((clay >= 7 ) & (clay < 27) &(silt >= 28) & (silt < 50) & (sand <= 52) & (clay != 255))] = 6      # loam
-    stype[where((clay >= 20) & (clay < 35) & (silt < 28) & (sand > 45) & (clay != 255))] = 7      # sandy clay loam
-    stype[where((clay >= 27) & (clay < 40.) & (sand < 20) & (clay != 255))] =  8      # silt clay loam
-    stype[where((clay >= 27) & (clay < 40.) & (sand >= 20) & (sand <= 45) & (clay != 255))] = 9      # clay loam
-    stype[where((clay >= 35) & (sand > 45) & (clay != 255))] = 10     # sandy clay
-    stype[where((clay >= 40) & (silt >= 40) & (clay != 255))] = 11     # silty clay
-    stype[where((clay >= 40) & (sand <= 45) & (silt < 40) & (clay != 255))] = 12     # clay
+    stype[where((silt + clay*1.5 < 15.) & (clay < 100))] = 1.  #SAND
+    stype[where((silt + 1.5*clay >= 15.) & (silt + 1.5*clay <30) & (clay < 100))] = 2. #Loamy Sand
+    stype[where((clay >= 7.) & (clay < 20) & (sand >52) & (silt + 2* clay >=30) & (clay <100))] = 3. #Sandy Loam (cond 1)
+    stype[where((clay <   7) & (silt < 50) & (silt+2*clay >= 30) & (clay < 100))]   = 3      # sandy loam (cond 2)
+    stype[where((silt >= 50) & (clay >= 12) & (clay < 27 ) & (clay < 100))] = 4      # silt loam (cond 1)
+    stype[where((silt >= 50) & (silt < 80) & (clay < 12) & (clay < 100))] = 4      # silt loam (cond 2)
+    stype[where((silt >= 80) & (clay < 12) & (clay < 100))]     = 5      # silt
+    stype[where((clay >= 7 ) & (clay < 27) &(silt >= 28) & (silt < 50) & (sand <= 52) & (clay < 100))] = 6      # loam
+    stype[where((clay >= 20) & (clay < 35) & (silt < 28) & (sand > 45) & (clay < 100))] = 7      # sandy clay loam
+    stype[where((clay >= 27) & (clay < 40.) & (sand < 20) & (clay < 100))] =  8      # silt clay loam
+    stype[where((clay >= 27) & (clay < 40.) & (sand >= 20) & (sand <= 45) & (clay < 100))] = 9      # clay loam
+    stype[where((clay >= 35) & (sand > 45) & (clay < 100))] = 10     # sandy clay
+    stype[where((clay >= 40) & (silt >= 40) & (clay < 100))] = 11     # silty clay
+    stype[where((clay >= 40) & (sand <= 45) & (silt < 40) & (clay < 100))] = 12     # clay
+    stype[where(stype == 0)] = 13
     return stype
 
 def create_thres(stype,thres):
@@ -132,7 +152,7 @@ if __name__ == "__main__":
         sand = open_fv3_binary(sand_file, res=res, tile=i).sand
         # calculate silt from sand and clay
         #( 1 = clay + sand + silt)
-        silt = 1 - clay - sand
+        silt = (1 - clay - sand).where( clay < 100)
         # needs % multiply by 100
         print('     Caclulating Soil Type...')
         stype = calc_soil_type(clay*100,sand*100,silt*100)
@@ -142,3 +162,4 @@ if __name__ == "__main__":
         thres = create_thres(stype,ut)
         print('     Output: {}'.format(output))
         to_prepchem_binary(thres.T,fname=output)
+        #to_prepchem_binary(st.T,fname=output)
